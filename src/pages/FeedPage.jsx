@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useApp } from '../context/AppContext';
-import { getFeedPosts } from '../lib/db';
+import { getFeedPosts, getComments, addComment as dbAddComment } from '../lib/db';
 import { gen, draw, fetchQuote } from '../utils/chart';
 
 const TF_OPTIONS = ['1D', '3D', '1W', '1M', '3M', '1Y'];
@@ -74,7 +74,7 @@ function Post({ post }) {
   const [likes, setLikes]   = useState(post.likes);
   const [tf, setTf]         = useState('1D');
   const [bull, setBull]     = useState(post.bull);
-  const [comments, setComments] = useState(post.comments || []);
+  const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
   const [livePrice, setLivePrice] = useState(null);
   const [liveChg, setLiveChg]   = useState(null);
@@ -83,6 +83,13 @@ function Post({ post }) {
   const myVote  = myVotes.find(v => v.post_id === post.id)?.direction ?? null;
   const isSaved = savedIds.includes(post.id);
   const bear    = 100 - bull;
+
+  /* load comments from DB */
+  useEffect(() => {
+    getComments(post.id).then(({ data }) => {
+      if (data) setComments(data);
+    });
+  }, [post.id]);
 
   useEffect(() => {
     const ticker = post.ticker.replace('/USD', '');
@@ -108,17 +115,15 @@ function Post({ post }) {
     castVote(post.id, side);
   };
 
-  const addComment = (e) => {
+  const addComment = async (e) => {
     e.stopPropagation();
     if (!commentInput.trim()) return;
-    const av = user ? (user.email?.[0] || '?').toUpperCase() : '?';
-    setComments(prev => [...prev, {
-      av,
-      color: 'linear-gradient(135deg,#00ff88,#4da6ff)',
-      user: '@me',
-      txt: commentInput,
-    }]);
+    if (!user) { showToast('יש להתחבר כדי להגיב', 'error'); return; }
+    const text = commentInput.trim();
     setCommentInput('');
+    const { data, error } = await dbAddComment(post.id, user.id, text);
+    if (error) { showToast('שגיאה בשליחת תגובה', 'error'); return; }
+    if (data) setComments(prev => [...prev, data]);
   };
 
   return (
@@ -199,12 +204,19 @@ function Post({ post }) {
         </div>
 
         <div className="comments">
-          {comments.map((c, i) => (
-            <div key={i} className="cm">
-              <div className="cm-av" style={{ background: c.color }}>{c.av}</div>
-              <div className="cm-txt"><span className="cm-u">{c.user}</span> {c.txt}</div>
-            </div>
-          ))}
+          {comments.map((c, i) => {
+            const prof = c.profiles || {};
+            const name = prof.name || c.user || 'משתמש';
+            const init = prof.init || name[0]?.toUpperCase() || '?';
+            const color = prof.avatar_color || c.color || 'var(--s2)';
+            const txt = c.text ?? c.txt ?? '';
+            return (
+              <div key={c.id || i} className="cm">
+                <div className="cm-av" style={{ background: color }}>{init}</div>
+                <div className="cm-txt"><span className="cm-u">{name}</span> {txt}</div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="c-row" onClick={(e) => e.stopPropagation()}>
