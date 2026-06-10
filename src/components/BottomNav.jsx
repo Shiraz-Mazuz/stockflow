@@ -6,7 +6,7 @@ export default function BottomNav() {
   return (
     <nav className="bottom-nav">
       <button className={`bn-btn ${page === 'feed' ? 'on' : ''}`} onClick={() => navigate('feed')}>
-        <span>🏠</span><span className="bn-lbl">בית</span>
+        <span>🏠</span><span className="bn-lbl">ניתוחים</span>
       </button>
       <button className={`bn-btn ${page === 'trending' ? 'on' : ''}`} onClick={() => navigate('trending')}>
         <span>📈</span><span className="bn-lbl">טרנד</span>

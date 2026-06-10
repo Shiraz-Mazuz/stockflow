@@ -1,7 +1,7 @@
 import { useApp } from '../context/AppContext';
 
 const NAV_ITEMS = [
-  { id: 'feed', icon: '🏠', label: 'פיד' },
+  { id: 'feed', icon: '🏠', label: 'ניתוחים' },
   { id: 'trending', icon: '📈', label: 'טרנד' },
   { id: 'search', icon: '🔍', label: 'חיפוש' },
   { id: 'notifications', icon: '🔔', label: 'התראות' },

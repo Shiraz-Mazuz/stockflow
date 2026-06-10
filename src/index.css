@@ -3,7 +3,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#080a0d; --surface:#10131a; --s2:#181c26; --border:#1f2433;
-  --green:#00c96e; --red:#e8334a; --gold:#f5c518; --blue:#4da6ff;
+  --green:#00b864; --red:#d93a4c; --gold:#e6b800; --blue:#4da6ff;
   --text:#f0f2f8; --muted:#5a6070; --muted2:#8a93a8;
 }
 
@@ -67,7 +67,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Heebo',s
 .a-icon.liked{background:rgba(255,45,85,.25);border-color:var(--red);}
 .a-icon.saved{background:rgba(253,214,10,.2);border-color:var(--gold);}
 .a-num{font-size:10px;color:var(--muted2);font-family:'IBM Plex Mono',monospace;}
-.p-bottom{position:absolute;bottom:0;left:0;right:0;height:230px;background:linear-gradient(to top,rgba(8,10,13,1) 0%,rgba(8,10,13,.97) 70%,transparent 100%);display:flex;flex-direction:column;z-index:10;pointer-events:all;}
+.p-bottom{position:absolute;bottom:0;left:0;right:0;height:270px;background:linear-gradient(to top,rgba(8,10,13,1) 0%,rgba(8,10,13,.98) 75%,transparent 100%);display:flex;flex-direction:column;z-index:10;pointer-events:all;}
 .p-user{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;}
 .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
 .p-name{font-weight:700;font-size:13px;}
