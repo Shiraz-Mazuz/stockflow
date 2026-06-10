@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { signOut } from '../lib/auth';
 import { gen, draw } from '../utils/chart';
+import EditProfileModal from '../modals/EditProfileModal';
 
 /* ── normalise a post row for display ── */
 function norm(p) {
@@ -70,8 +71,16 @@ export default function ProfilePage() {
     showToast,
   } = useApp();
 
-  const [tab, setTab]     = useState('posts');
-  const bannerRef         = useRef(null);
+  const handleProfileSaved = (updated) => {
+    setEditOpen(false);
+    showToast('הפרופיל עודכן ✓');
+    // reload page to show new data
+    window.location.reload();
+  };
+
+  const [tab, setTab]         = useState('posts');
+  const [editOpen, setEditOpen] = useState(false);
+  const bannerRef             = useRef(null);
 
   useEffect(() => {
     draw(bannerRef.current, gen(200, 60, 0.0004, 0.012), '#00ff88');
@@ -99,6 +108,7 @@ export default function ProfilePage() {
   const pnl        = profile?.pnl        || '+0%';
 
   return (
+    <>
     <div className="page" id="profile-page">
       <div className="profile-page" id="profileScroll">
         <div className="prof-banner">
@@ -109,7 +119,7 @@ export default function ProfilePage() {
           <div className="prof-avatar-wrap">
             <div className="prof-avatar" style={{ background: avatarColor }}>{displayInit}</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="prof-edit">✏️ ערוך פרופיל</button>
+              <button className="prof-edit" onClick={() => setEditOpen(true)}>✏️ ערוך פרופיל</button>
               <button
                 onClick={handleSignOut}
                 style={{
@@ -197,5 +207,7 @@ export default function ProfilePage() {
         )}
       </div>
     </div>
+    {editOpen && <EditProfileModal onClose={handleProfileSaved} />}
+    </>
   );
 }
