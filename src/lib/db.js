@@ -12,6 +12,15 @@ export async function getProfile(userId) {
   return { data, error };
 }
 
+export async function getProfileByHandle(handle) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('handle', handle)
+    .single();
+  return { data, error };
+}
+
 export async function updateProfile(userId, updates) {
   const { data, error } = await supabase
     .from('profiles')
@@ -217,6 +226,12 @@ export async function followUser(followerId, followingId) {
   const { error } = await supabase
     .from('follows')
     .insert({ follower_id: followerId, following_id: followingId });
+
+  if (!error) {
+    // increment followers on target, increment following on self
+    await supabase.rpc('increment_followers', { target_id: followingId });
+    await supabase.rpc('increment_following', { target_id: followerId });
+  }
   return { error };
 }
 
@@ -226,6 +241,11 @@ export async function unfollowUser(followerId, followingId) {
     .delete()
     .eq('follower_id', followerId)
     .eq('following_id', followingId);
+
+  if (!error) {
+    await supabase.rpc('decrement_followers', { target_id: followingId });
+    await supabase.rpc('decrement_following', { target_id: followerId });
+  }
   return { error };
 }
 
