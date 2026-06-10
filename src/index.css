@@ -3,7 +3,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#080a0d; --surface:#10131a; --s2:#181c26; --border:#1f2433;
-  --green:#00ff88; --red:#ff2d55; --gold:#ffd60a; --blue:#4da6ff;
+  --green:#00c96e; --red:#e8334a; --gold:#f5c518; --blue:#4da6ff;
   --text:#f0f2f8; --muted:#5a6070; --muted2:#8a93a8;
 }
 
@@ -362,34 +362,33 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Heebo',s
 /* TRENDING */
 .trend-inner{flex:1;overflow-y:auto;scrollbar-width:none;background:var(--bg);height:100%;direction:rtl;min-height:0;}
 .trend-inner::-webkit-scrollbar{display:none;}
-.trend-header{padding:20px 16px 8px;display:flex;align-items:baseline;justify-content:space-between;}
-.trend-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--text);}
+.trend-header{padding:22px 16px 10px;display:flex;align-items:center;justify-content:space-between;}
+.trend-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--text);}
 .trend-subtitle{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
-.market-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 16px 12px;border-bottom:1px solid var(--border);}
+.market-bar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px 14px;}
 .market-bar::-webkit-scrollbar{display:none;}
-.mkt-item{flex-shrink:0;padding:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-left:8px;text-align:center;}
-.mkt-item:last-child{margin-left:0;}
-.mkt-name{display:block;font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:3px;}
-.mkt-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;}
-.mkt-val span{font-size:10px;}
+.mkt-item{flex-shrink:0;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center;min-width:80px;}
+.mkt-name{display:block;font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:4px;}
+.mkt-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.mkt-val span{font-size:10px;opacity:.85;}
 .mkt-val.up{color:var(--green);}
 .mkt-val.dn{color:var(--red);}
-.trend-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;}
-.trend-tab{flex:1;padding:12px 8px;text-align:center;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;}
+.trend-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;padding:0 8px;}
+.trend-tab{flex:1;padding:12px 8px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;border-radius:0;}
 .trend-tab.on{color:var(--green);border-bottom-color:var(--green);}
-.trend-content{display:none;padding:0 0 80px;}
+.trend-content{display:none;padding:0 0 100px;}
 .trend-content.on{display:block;}
-.trend-section-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;padding:14px 16px 6px;}
-.trend-list{display:flex;flex-direction:column;}
-.trend-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(31,36,51,.5);cursor:pointer;transition:background .15s;}
-.trend-row:hover{background:var(--surface);}
-.trend-rank{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--muted);width:20px;text-align:center;flex-shrink:0;}
+.trend-section-lbl{font-size:11px;letter-spacing:1px;color:var(--muted);padding:16px 16px 8px;display:flex;align-items:center;gap:6px;}
+.trend-list{display:flex;flex-direction:column;padding:0 12px;gap:4px;}
+.trend-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:border-color .2s;}
+.trend-row:hover{border-color:var(--green);}
+.trend-rank{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
 .trend-rank.gold{color:var(--gold);}
 .trend-rank.silver{color:#aaa;}
 .trend-rank.bronze{color:#cd7f32;}
 .trend-ticker-wrap{flex:1;}
-.trend-ticker{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;}
-.trend-name{font-size:11px;color:var(--muted2);}
+.trend-ticker{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;letter-spacing:.5px;}
+.trend-name{font-size:11px;color:var(--muted2);margin-top:1px;}
 .trend-spark{width:70px;height:36px;position:relative;flex-shrink:0;}
 .trend-spark canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
 .trend-price-wrap{text-align:left;flex-shrink:0;}
