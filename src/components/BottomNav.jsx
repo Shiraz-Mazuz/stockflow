@@ -1,7 +1,7 @@
 import { useApp } from '../context/AppContext';
 
 export default function BottomNav() {
-  const { page, navigate, notifications, toggleTheme, theme, setComposeOpen } = useApp();
+  const { page, navigate, notifications, setComposeOpen } = useApp();
 
   return (
     <nav className="bottom-nav">
@@ -14,12 +14,8 @@ export default function BottomNav() {
       <button className="bn-btn compose-btn" onClick={() => setComposeOpen(true)}>
         <span>✏️</span>
       </button>
-      <button className={`bn-btn ${page === 'notifications' ? 'on' : ''}`} onClick={() => navigate('notifications')}>
-        <span style={{ position: 'relative' }}>
-          🔔
-          {notifications > 0 && <span className="notif-count bn-notif-badge">{notifications}</span>}
-        </span>
-        <span className="bn-lbl">התראות</span>
+      <button className={`bn-btn ${page === 'search' ? 'on' : ''}`} onClick={() => navigate('search')}>
+        <span>🔍</span><span className="bn-lbl">חיפוש</span>
       </button>
       <button className={`bn-btn ${page === 'profile' ? 'on' : ''}`} onClick={() => navigate('profile')}>
         <span>👤</span><span className="bn-lbl">פרופיל</span>
