@@ -116,8 +116,8 @@ export default function ProfilePage() {
 
         <div className="prof-info">
           <div className="prof-avatar-wrap">
-            <div className="prof-avatar" style={{ background: avatarColor, position: 'relative', zIndex: 1 }}>{displayInit}</div>
-            <div style={{ display: 'flex', gap: 8, position: 'relative', zIndex: 2 }}>
+            <div className="prof-avatar" style={{ background: avatarColor }}>{displayInit}</div>
+            <div style={{ display: 'flex', gap: 8 }}>
               <button className="prof-edit" onClick={() => setEditOpen(true)}>✏️ ערוך פרופיל</button>
               <button
                 onClick={handleSignOut}
