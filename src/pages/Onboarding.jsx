@@ -223,12 +223,12 @@ export default function Onboarding() {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) < 50) return; // too short swipe
     if (diff > 0) {
-      // swipe left → next
+      // swipe left → previous
+      if (slideIdx > 0) setSlideIdx(i => i - 1);
+    } else {
+      // swipe right → next
       if (slideIdx < SLIDES.length - 1) setSlideIdx(i => i + 1);
       else setStep('auth');
-    } else {
-      // swipe right → previous
-      if (slideIdx > 0) setSlideIdx(i => i - 1);
     }
     touchStartX.current = null;
   };
