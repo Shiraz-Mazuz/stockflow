@@ -222,15 +222,28 @@ export async function getMyVotes(userId) {
 /* ══════════════════════════════════
    FOLLOWS
 ══════════════════════════════════ */
+async function adjustCount(userId, field, delta) {
+  /* read current value then write new value — works without RPC */
+  const { data } = await supabase
+    .from('profiles')
+    .select(field)
+    .eq('id', userId)
+    .single();
+  const current = data?.[field] ?? 0;
+  await supabase
+    .from('profiles')
+    .update({ [field]: Math.max(0, current + delta) })
+    .eq('id', userId);
+}
+
 export async function followUser(followerId, followingId) {
   const { error } = await supabase
     .from('follows')
     .insert({ follower_id: followerId, following_id: followingId });
 
   if (!error) {
-    // increment followers on target, increment following on self
-    await supabase.rpc('increment_followers', { target_id: followingId });
-    await supabase.rpc('increment_following', { target_id: followerId });
+    await adjustCount(followingId, 'followers', +1);
+    await adjustCount(followerId,  'following', +1);
   }
   return { error };
 }
@@ -243,8 +256,8 @@ export async function unfollowUser(followerId, followingId) {
     .eq('following_id', followingId);
 
   if (!error) {
-    await supabase.rpc('decrement_followers', { target_id: followingId });
-    await supabase.rpc('decrement_following', { target_id: followerId });
+    await adjustCount(followingId, 'followers', -1);
+    await adjustCount(followerId,  'following', -1);
   }
   return { error };
 }
