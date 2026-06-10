@@ -71,15 +71,14 @@ export default function ProfilePage() {
     showToast,
   } = useApp();
 
+  const [tab, setTab]           = useState('posts');
+  const [editOpen, setEditOpen] = useState(false);
+
   const handleProfileSaved = (updated) => {
     setEditOpen(false);
     showToast('הפרופיל עודכן ✓');
-    // reload page to show new data
     window.location.reload();
   };
-
-  const [tab, setTab]         = useState('posts');
-  const [editOpen, setEditOpen] = useState(false);
   const bannerRef             = useRef(null);
 
   useEffect(() => {
