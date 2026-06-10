@@ -117,23 +117,23 @@ export default function ProfilePage() {
         <div className="prof-info">
           <div className="prof-avatar-wrap">
             <div className="prof-avatar" style={{ background: avatarColor }}>{displayInit}</div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button className="prof-edit" onClick={() => setEditOpen(true)}>✏️ ערוך פרופיל</button>
-              <button
-                onClick={handleSignOut}
-                style={{
-                  background: 'none', border: '1px solid var(--border)',
-                  color: 'var(--muted)', borderRadius: 8, padding: '6px 12px',
-                  cursor: 'pointer', fontSize: 12,
-                }}
-              >
-                🚪 התנתק
-              </button>
-            </div>
           </div>
           <div className="prof-name">{displayName}</div>
           <div className="prof-handle">@{displayHandle}{joinedDate ? ` · הצטרף ${joinedDate}` : ''}</div>
           <div className="prof-bio">{bio}</div>
+          <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+            <button className="prof-edit" onClick={() => setEditOpen(true)}>✏️ ערוך פרופיל</button>
+            <button
+              onClick={handleSignOut}
+              style={{
+                background: 'none', border: '1px solid var(--border)',
+                color: 'var(--muted)', borderRadius: 8, padding: '6px 12px',
+                cursor: 'pointer', fontSize: 12,
+              }}
+            >
+              🚪 התנתק
+            </button>
+          </div>
 
           <div className="prof-stats">
             <div className="stat"><div className="stat-val">{myPosts.length}</div><div className="stat-lbl">ניתוחים</div></div>
