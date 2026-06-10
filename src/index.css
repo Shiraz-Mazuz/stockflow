@@ -105,8 +105,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Heebo',s
 /* PROFILE */
 .profile-page{flex:1;overflow-y:auto;scrollbar-width:none;background:var(--bg);direction:rtl;}
 .profile-page::-webkit-scrollbar{display:none;}
-.prof-banner{height:140px;background:linear-gradient(135deg,#0a1628 0%,#0d2a1a 50%,#0a0c0d 100%);position:relative;overflow:hidden;}
-.prof-info{padding:0 20px 0;margin-top:-36px;position:relative;z-index:20;}
+.prof-banner{height:140px;background:linear-gradient(135deg,#0a1628 0%,#0d2a1a 50%,#0a0c0d 100%);position:relative;overflow:hidden;pointer-events:none;}
+.prof-info{padding:0 20px 0;margin-top:-36px;position:relative;z-index:20;pointer-events:all;}
 .prof-avatar-wrap{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:12px;position:relative;z-index:10;}
 .prof-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#00ff88,#4da6ff);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;color:#000;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--green);}
 .prof-edit{font-size:12px;font-weight:700;padding:7px 16px;border-radius:20px;border:1px solid var(--border);color:var(--muted2);background:var(--surface);cursor:pointer;font-family:'Heebo',sans-serif;transition:all .2s;}
