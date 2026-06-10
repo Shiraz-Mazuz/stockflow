@@ -20,7 +20,7 @@ export default function ExpandedPost() {
 
   useEffect(() => {
     if (!post || !chartRef.current) return;
-    const col = post.d ? '#00ff88' : '#ff2d55';
+    const col = post.d ? '#00b864' : '#d93a4c';
     draw(chartRef.current, gen(post.base || 100, 90, post.tr || 0, post.vol || 0.01), col);
   }, [post]);
 

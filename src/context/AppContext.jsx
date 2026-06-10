@@ -7,7 +7,7 @@ import {
   getMySavedIds, savePostDB, unsavePostDB, getSavedPosts,
   getMyLikes, likePost, unlikePost,
   getMyVotes, vote as dbVote,
-  getFollowing,
+  getFollowing, followUser, unfollowUser,
 } from '../lib/db';
 
 const AppContext = createContext(null);
@@ -37,6 +37,7 @@ export function AppProvider({ children }) {
   const [savedIds, setSavedIds]   = useState([]);     // set of post ids
   const [likedIds, setLikedIds]   = useState([]);
   const [myVotes, setMyVotes]     = useState([]);
+  const [followingIds, setFollowingIds] = useState([]);
 
   /* ── UI ── */
   const [toast, setToast]         = useState(null);
@@ -86,6 +87,7 @@ export function AppProvider({ children }) {
       { data: savedData },
       likedArr,
       votesArr,
+      followingArr,
     ] = await Promise.all([
       getProfile(uid),
       getMyPosts(uid),
@@ -93,6 +95,7 @@ export function AppProvider({ children }) {
       getSavedPosts(uid),
       getMyLikes(uid),
       getMyVotes(uid),
+      getFollowing(uid),
     ]);
 
     if (profileData) setProfile(profileData);
@@ -107,6 +110,7 @@ export function AppProvider({ children }) {
     }
     setLikedIds(likedArr);
     setMyVotes(votesArr);
+    setFollowingIds(followingArr);
   }, []);
 
   /* ════════════════════════════════
@@ -141,6 +145,7 @@ export function AppProvider({ children }) {
         setSavedIds([]);
         setLikedIds([]);
         setMyVotes([]);
+        setFollowingIds([]);
         setPage('onboarding');
       }
     });
@@ -241,6 +246,21 @@ export function AppProvider({ children }) {
     await dbVote(postId, user.id, direction);
   }, [user, showToast]);
 
+  const toggleFollow = useCallback(async (targetUserId) => {
+    if (!user) { showToast('יש להתחבר תחילה', 'error'); return; }
+    if (targetUserId === user.id) return;
+    const isFollowing = followingIds.includes(targetUserId);
+    if (isFollowing) {
+      setFollowingIds(prev => prev.filter(id => id !== targetUserId));
+      await unfollowUser(user.id, targetUserId);
+      showToast('הפסקת לעקוב');
+    } else {
+      setFollowingIds(prev => [...prev, targetUserId]);
+      await followUser(user.id, targetUserId);
+      showToast('עוקב ✓');
+    }
+  }, [user, followingIds, showToast]);
+
   return (
     <AppContext.Provider value={{
       /* theme */
@@ -259,6 +279,7 @@ export function AppProvider({ children }) {
       savedPosts, savedIds, savePost,
       likedIds, toggleLike,
       myVotes, castVote,
+      followingIds, toggleFollow,
       /* ui */
       toast, showToast,
       notifications, setNotifications,

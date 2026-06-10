@@ -6,7 +6,7 @@ import { gen, draw, fetchQuote } from '../utils/chart';
 function SparkCanvas({ item }) {
   const ref = useRef(null);
   useEffect(() => {
-    const col = item.c.startsWith('+') ? '#00ff88' : '#ff2d55';
+    const col = item.c.startsWith('+') ? '#00b864' : '#d93a4c';
     draw(ref.current, gen(item.base, 30, item.tr, item.vol), col);
   }, [item]);
   return <canvas ref={ref} style={{ width: '100%', height: '100%' }} />;

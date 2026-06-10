@@ -7,7 +7,7 @@ import { gen, draw, fetchQuote } from '../utils/chart';
 function SparkChart({ base, tr, vol, isUp }) {
   const ref = useRef(null);
   useEffect(() => {
-    draw(ref.current, gen(base, 60, tr, vol), isUp ? '#00ff88' : '#ff2d55');
+    draw(ref.current, gen(base, 60, tr, vol), isUp ? '#00b864' : '#d93a4c');
   }, [base, tr, vol, isUp]);
   return <canvas ref={ref} style={{ width: '100%', height: '100%' }} />;
 }
@@ -61,7 +61,7 @@ export default function StockPage() {
 
   const isInWatchlist = !!watchlist.find(s => s.t === stock.t);
   const isUp = quote ? quote.change >= 0 : stock.d === 1;
-  const col = isUp ? '#00ff88' : '#ff2d55';
+  const col = isUp ? '#00b864' : '#d93a4c';
 
   const displayPrice = quote
     ? '$' + quote.price.toLocaleString(undefined, { maximumFractionDigits: 2 })

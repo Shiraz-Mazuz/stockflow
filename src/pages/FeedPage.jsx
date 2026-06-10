@@ -25,6 +25,7 @@ function normalise(row) {
     vol:       row.vol    ?? 0.013,
     date:      row.created_at,
     username:  prof.name   || 'משתמש',
+    userId:    row.user_id,
     handle:    prof.handle || 'user',
     init:      prof.init   || '?',
     userColor: prof.avatar_color || 'linear-gradient(135deg,#00ff88,#4da6ff)',
@@ -40,14 +41,14 @@ function PostChart({ post, tf }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const col = post.d ? '#00ff88' : '#ff2d55';
+    const col = post.d ? '#00b864' : '#d93a4c';
     const volMult = TF_VOL[tf] || 1;
     draw(canvasRef.current, gen(post.base, 60, post.tr, post.vol * volMult), col);
   }, [post, tf]);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
-      const col = post.d ? '#00ff88' : '#ff2d55';
+      const col = post.d ? '#00b864' : '#d93a4c';
       draw(canvasRef.current, gen(post.base, 60, post.tr, post.vol), col);
     });
     if (canvasRef.current) observer.observe(canvasRef.current);
@@ -67,6 +68,7 @@ function Post({ post }) {
     likedIds, toggleLike,
     myVotes, castVote,
     showToast, user,
+    followingIds, toggleFollow,
   } = useApp();
 
   const [likes, setLikes]   = useState(post.likes);
@@ -173,7 +175,14 @@ function Post({ post }) {
             </div>
             <div className="p-handle">@{post.handle}</div>
           </div>
-          <button className="follow" onClick={(e) => e.stopPropagation()}>+ עקוב</button>
+          {user?.id !== post.userId && (
+            <button
+              className={`follow${followingIds.includes(post.userId) ? ' following' : ''}`}
+              onClick={(e) => { e.stopPropagation(); toggleFollow(post.userId); }}
+            >
+              {followingIds.includes(post.userId) ? '✓ עוקב' : '+ עקוב'}
+            </button>
+          )}
         </div>
 
         <div className="p-text">{post.txt} <span className="p-tag">#{post.ticker}</span></div>

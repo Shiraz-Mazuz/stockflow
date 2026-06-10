@@ -82,7 +82,7 @@ export default function ProfilePage() {
   const bannerRef             = useRef(null);
 
   useEffect(() => {
-    draw(bannerRef.current, gen(200, 60, 0.0004, 0.012), '#00ff88');
+    draw(bannerRef.current, gen(200, 60, 0.0004, 0.012), '#00b864');
   }, []);
 
   const handleSignOut = async () => {

@@ -10,7 +10,7 @@ const HOT = ['NVDA', 'BTC', 'TSLA', 'META', 'AAPL', 'ETH', 'AMD'];
 function SparkChart({ base, tr, vol, isUp }) {
   const ref = useRef(null);
   useEffect(() => {
-    const col = isUp ? '#00ff88' : '#ff2d55';
+    const col = isUp ? '#00b864' : '#d93a4c';
     draw(ref.current, gen(base, 60, tr, vol), col);
   }, [base, tr, vol, isUp]);
   return <canvas ref={ref} style={{ width: '100%', height: '100%' }} />;
@@ -23,7 +23,7 @@ function StockCard({ stock, onAddWatchlist, isInWatchlist }) {
   const [loading, setLoading] = useState(true);
 
   const isUp = quote ? quote.change >= 0 : stock.d === 1;
-  const col = isUp ? '#00ff88' : '#ff2d55';
+  const col = isUp ? '#00b864' : '#d93a4c';
   const displayPrice = quote
     ? '$' + quote.price.toLocaleString(undefined, { maximumFractionDigits: 2 })
     : '$' + stock.p;
