@@ -125,6 +125,8 @@ export default function ProfilePage() {
                   background: 'none', border: '1px solid var(--border)',
                   color: 'var(--muted)', borderRadius: 8, padding: '6px 12px',
                   cursor: 'pointer', fontSize: 12,
+                  position: 'relative', zIndex: 100,
+                  pointerEvents: 'auto', touchAction: 'manipulation',
                 }}
               >
                 🚪 התנתק
