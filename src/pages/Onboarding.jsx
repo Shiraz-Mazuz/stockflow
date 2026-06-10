@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { signUpEmail, signInEmail, signInGoogle } from '../lib/auth';
 
@@ -212,6 +212,26 @@ function AuthScreen() {
 export default function Onboarding() {
   const [step, setStep] = useState('splash'); // splash | slides | auth
   const [slideIdx, setSlideIdx] = useState(0);
+  const touchStartX = useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) < 50) return; // too short swipe
+    if (diff > 0) {
+      // swipe left → next
+      if (slideIdx < SLIDES.length - 1) setSlideIdx(i => i + 1);
+      else setStep('auth');
+    } else {
+      // swipe right → previous
+      if (slideIdx > 0) setSlideIdx(i => i - 1);
+    }
+    touchStartX.current = null;
+  };
 
   if (step === 'splash') {
     return (
@@ -234,7 +254,7 @@ export default function Onboarding() {
 
   return (
     <div className="onboard-overlay">
-      <div className="slides-screen">
+      <div className="slides-screen" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         <div className="slide active">
           <div className="slide-emoji">{slide.emoji}</div>
           <div className="slide-title">{slide.title}</div>
